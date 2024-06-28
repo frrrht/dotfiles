@@ -49,9 +49,27 @@ sublime() {
 alias subl="sublime"
 
 # Development helpers
-alias wip='git add .;git commit -m "wip"; git push'
+wip() {
+    if [ $# -eq 0 ]; then
+        git add .
+        git commit -m "wip"
+    else
+        git add .
+        git commit -m "$*"
+    fi
+    git push
+}
 alias repo='open "$(git config --get remote.origin.url)"'
 alias site='open "http://$(basename $PWD).test/"'
+clean() {
+	if [ -d .git ]; then
+		echo -e "\e[32mCleaning stale git branches..."
+		git branch --merged | grep -v "\* \| main\|master\|develop" | xargs -n 1 git branch -d
+	fi
+
+	echo -e "\e[32mCleaning .DS_Store files..."
+	find . -type f -name '.DS_Store' -delete
+}
 
 # Laravel/PHP specific helpers
 alias sail='vendor/bin/sail'
