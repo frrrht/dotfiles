@@ -26,6 +26,11 @@ if test ! "$(which brew)"; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# Check for oh-my-zsh and install if we don't have it
+if test ! "$(which omz)"; then
+  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
 # Update Homebrew recipes
 brew update
 
