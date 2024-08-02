@@ -28,4 +28,4 @@ export NVM_DIR="$HOME/.nvm"
 eval "$(zoxide init zsh)"
 
 # Pretty print device info
-neofetch
+fastfetch

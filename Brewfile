@@ -14,7 +14,7 @@ brew 'git'
 brew 'httpie'
 brew 'pkg-config'
 brew 'stow'
-brew 'neofetch'
+brew 'fastfetch'
 brew 'neovim'
 brew 'zoxide'
 
