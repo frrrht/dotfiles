@@ -96,7 +96,7 @@ ar() {
   if [ $# -eq 0 ]; then
     php artisan
   else
-    php artisan "$@"
+    php artisan "$*"
   fi
 }
 alias sail='vendor/bin/sail'
@@ -104,18 +104,18 @@ alias phpunit='vendor/bin/phpunit'
 alias pest='clear;vendor/bin/pest'
 pestf() {
   clear
-  echo "  \n\e[33mRunning Pest tests with filter: \e[0m$1[0m\n"
-  vendor/bin/pest --filter="$1"
+  echo "  \n\e[33mRunning Pest tests with filter: \e[0m$*\n"
+  vendor/bin/pest --filter="$*"
 }
 alias pestp='clear;vendor/bin/pest --parallel'
 pestpf() {
   clear
-  vendor/bin/pest --parallel --filter="$1"
+  vendor/bin/pest --parallel --filter="$*"
 }
 alias pint='clear;vendor/bin/pint'
 pintf() {
   clear
-  vendor/bin/pint --filter="$1"
+  vendor/bin/pint --filter="$*"
 }
 alias duster='vendor/bin/duster'
 alias phpstan='vendor/bin/phpstan'
