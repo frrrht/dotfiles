@@ -9,6 +9,9 @@ These are my personal [dotfiles](https://www.freecodecamp.org/news/dive-into-dot
 Feel free to use anything you find in this repo.
 Powered by [musa11971's dotfiles](https://github.com/musa11971/dotfiles).
 
+## Usage
+Simply type `dev` in your terminal to see all available commands.
+
 ## Installation
 Follow these install instructions to set up on a Mac.
 

@@ -1,14 +1,14 @@
 #!/bin/sh
 
 # frrrht-helpers command
-frr() {
+dev() {
 	if [ -z "$1" ] || [ "$1" = 'help' ] || [ "$1" = '' ]; then
 		# Help command
 		echo -e "       📄 \e[1mfrrrht-helpers"
 		echo -e "  \e[1mhttps://github.com/frrrht/dotfiles\e[0m\n"
 
 		echo -e "\e[33mUsage:\e[0m"
-		echo -e "  'frr [command]'\n"
+		echo -e "  'dev [command]'\n"
 
 		echo -e "\e[33mAvailable commands:\e[0m"
 		echo -e "  \e[32mhelp\e[0m\t\t\tShows this help screen"
@@ -47,7 +47,7 @@ frr() {
 		echo -e "  \e[32mphpstan\e[0m\t\tRuns PHPStan in the current context"
 		echo -e "  \e[32mmfs\e[0m\t\t\tRuns php artisan migrate:fresh --seed"
 	else
-		echo -e "\e[91mUnknown command, use 'frr help' to list all available commands."
+		echo -e "\e[91mUnknown command, use 'dev help' to list all available commands."
 	fi
 }
 
