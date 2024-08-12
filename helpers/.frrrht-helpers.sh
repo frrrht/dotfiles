@@ -122,4 +122,4 @@ alias phpstan='vendor/bin/phpstan'
 alias mfs='php artisan migrate:fresh --seed'
 
 # Self-update
-alias dotfiles="cd $HOME/dotfiles; git pull"
+alias dotfiles="cd $HOME/dotfiles; git pull; reloadshell"
