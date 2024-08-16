@@ -26,6 +26,7 @@ dev() {
 		echo -e "  \e[32mzipfix\e[0m\t\tRemove .DS_Store files for all .zip archives in the current working directory."
 		echo -e "  \e[32mcd\e[0m\t\t\tZioxide's efficient directory browser."
 		echo -e "  \e[32mfinder\e[0m\t\tOpen the current working directory in Finder."
+		echo -e "  \e[32mno_ds\e[0m\t\t\tRemove all .DS_Store files in the current working directory, recursively."
 
 		echo -e "\n\e[33mDevelopment helpers:\e[0m"
 		echo -e "  \e[32msubl\e[0m\t\t\tOpen the specified directory or file in Sublime Text."
@@ -82,14 +83,17 @@ wip() {
 }
 alias repo='open "$(git config --get remote.origin.url)"'
 alias site='open "http://$(basename $PWD).test/"'
+no_ds() {
+  echo -e "\e[32mCleaning .DS_Store files..."
+	find . -type f -name '.DS_Store' -delete
+}
 clean() {
 	if [ -d .git ]; then
 		echo -e "\e[32mCleaning stale git branches..."
 		git branch --merged | grep -v "\* \| main\|master\|develop" | xargs -n 1 git branch -d
 	fi
 
-	echo -e "\e[32mCleaning .DS_Store files..."
-	find . -type f -name '.DS_Store' -delete
+	no_ds
 }
 
 # Laravel/PHP specific helpers
