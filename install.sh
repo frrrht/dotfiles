@@ -50,6 +50,12 @@ if test ! "$(which valet)"; then
   "$HOME/.composer/vendor/bin/valet" trust
 fi
 
+# Check for Node and install if we don't have it
+if test ! "$(which node)"; then
+  nvm install latest
+  nvm use latest
+fi
+
 # Stow all directories to the home
 stow helpers -t $HOME
 
