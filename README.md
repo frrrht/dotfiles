@@ -16,9 +16,8 @@ Simply type `dev` in your terminal to see all available commands.
 Follow these install instructions to set up on a Mac.
 
 1. Update macOS to the latest version with the App Store
-4. Clone this repo to `~/.dotfiles`.
-5. Install [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh#getting-started)
-6. Run the installation script to start the installation: `./install.sh`
+2. Clone this repo to `~/dotfiles`.
+3. Run the installation script to start the installation: `./install.sh`
 
 Your Mac is now ready to use!
 
