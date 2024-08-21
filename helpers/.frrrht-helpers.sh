@@ -27,6 +27,7 @@ dev() {
 		echo -e "  \e[32mcd\e[0m\t\t\tZioxide's efficient directory browser."
 		echo -e "  \e[32mfinder\e[0m\t\tOpen the current working directory in Finder."
 		echo -e "  \e[32mno_ds\e[0m\t\t\tRemove all .DS_Store files in the current working directory, recursively."
+		echo -e "  \e[32mcopy\e[0m\t\t\tCopy the content of a given file to the clipboard."
 
 		echo -e "\n\e[33mDevelopment helpers:\e[0m"
 		echo -e "  \e[32msubl\e[0m\t\t\tOpen the specified directory or file in Sublime Text."
@@ -65,6 +66,14 @@ alias vim='nvim'
 alias zipfix='for f in *.zip; do zip -d "$f" "__MACOSX/*"; done; for f in *.zip; do zip -d "$f" "*/.DS_Store"; done;'
 alias cd='z'
 alias finder='open .'
+copy() {
+  if [ -z "$1" ]; then
+    echo "  \n\e[33mUsage: \e[0mcopy [file]\n"
+  else
+    pbcopy < "$1"
+    echo "  \n\e[33mCopied content of \e[0m$1\e[33m to clipboard.\e[0m\n"
+  fi
+}
 
 # Development helpers
 sublime() {
