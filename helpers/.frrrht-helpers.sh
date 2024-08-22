@@ -35,6 +35,7 @@ dev() {
 		echo -e "  \e[32mrepo\e[0m\t\t\tOpens the current git repository in the browser"
 		echo -e "  \e[32msite\e[0m\t\t\tOpens the current directory in the browser (http://{dir}.test/)"
 		echo -e "  \e[32mclean\e[0m\t\t\tClean stale git branches and .DS_Store files."
+		echo -e "  \e[32mnr\e[0m\t\t\tShortcut for 'npm run [script]'."
 
 		echo -e "\n\e[33mLaravel helpers:\e[0m"
 		echo -e "  \e[32mar\e[0m\t\t\tRuns Laravel Artisan commands in the current context."
@@ -77,13 +78,13 @@ copy() {
 
 # Development helpers
 sublime() {
-	open "$1" -a "Sublime Text"
+	open "$1" -a 'Sublime Text'
 }
-alias subl="sublime"
+alias subl='sublime'
 wip() {
     if [ $# -eq 0 ]; then
         git add .
-        git commit -m "wip"
+        git commit -m 'wip'
     else
         git add .
         git commit -m "$*"
@@ -103,6 +104,13 @@ clean() {
 	fi
 
 	no_ds
+}
+nr() {
+  if [ -z "$1" ]; then
+    npm run
+  else
+    npm run $*
+  fi
 }
 
 # Laravel/PHP specific helpers
