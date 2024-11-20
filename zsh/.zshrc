@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/ferhat/.zsh/completions:"* ]]; then export FPATH="/Users/ferhat/.zsh/completions:$FPATH"; fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -29,3 +31,7 @@ eval "$(zoxide init zsh)"
 
 # Pretty print device info
 fastfetch
+. "/Users/ferhat/.deno/env"
+# Initialize zsh completions (added by deno install script)
+autoload -Uz compinit
+compinit

@@ -52,8 +52,8 @@ fi
 
 # Check for Node and install if we don't have it
 if test ! "$(which node)"; then
-  nvm install latest
-  nvm use latest
+  nvm install lts/jod
+  nvm use lts/jod
 fi
 
 # Stow all directories to the home
