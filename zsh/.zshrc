@@ -1,5 +1,3 @@
-# Add deno completions to search path
-if [[ ":$FPATH:" != *":/Users/ferhat/.zsh/completions:"* ]]; then export FPATH="/Users/ferhat/.zsh/completions:$FPATH"; fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
