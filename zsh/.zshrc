@@ -31,7 +31,3 @@ eval "$(zoxide init zsh)"
 
 # Pretty print device info
 fastfetch
-. "/Users/ferhat/.deno/env"
-# Initialize zsh completions (added by deno install script)
-autoload -Uz compinit
-compinit
