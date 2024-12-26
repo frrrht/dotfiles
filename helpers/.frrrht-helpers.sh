@@ -143,7 +143,7 @@ pintf() {
 alias duster='vendor/bin/duster'
 alias phpstan='vendor/bin/phpstan'
 alias mfs='ar migrate:fresh --seed'
-alias pest='clear;ar dusk'
+alias dusk='clear;ar dusk'
 
 # Self-update
 alias dotfiles="cd $HOME/dotfiles; git pull; reloadshell"
