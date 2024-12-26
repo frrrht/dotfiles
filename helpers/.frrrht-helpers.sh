@@ -50,6 +50,7 @@ dev() {
 		echo -e "  \e[32mduster\e[0m\t\tRuns Duster in the current context"
 		echo -e "  \e[32mphpstan\e[0m\t\tRuns PHPStan in the current context"
 		echo -e "  \e[32mmfs\e[0m\t\t\tRuns 'php artisan migrate:fresh --seed'"
+		echo -e "  \e[32mdusk\e[0m\t\t\tRuns Dusk in the current context"
 	else
 		echo -e "\e[91mUnknown command, use 'dev help' to list all available commands."
 	fi
