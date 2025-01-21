@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# frrrht-helpers command
+# <frrrht-helpers command>
 dev() {
 	if [ -z "$1" ] || [ "$1" = 'help' ] || [ "$1" = '' ]; then
 		# Help command
@@ -23,9 +23,9 @@ dev() {
 		echo -e "  \e[32mcatt\e[0m\t\t\tConcatenate and print files (on steroids) without paging and with line numbers."
 		echo -e "  \e[32mcattt\e[0m\t\t\tConcatenate and print files (on steroids) with scrollable paging and line numbers."
 		echo -e "  \e[32mvim\e[0m\t\t\tNeoVIM, hyperextensible Vim-based text editor. (hint: ^c + :qa! & ^c + :wq)"
-		echo -e "  \e[32mzipfix\e[0m\t\t\tRemove .DS_Store files for all .zip archives in the current working directory."
+		echo -e "  \e[32mzipfix\e[0m\t\tRemove .DS_Store files for all .zip archives in the current working directory."
 		echo -e "  \e[32mcd\e[0m\t\t\tZioxide's efficient directory browser."
-		echo -e "  \e[32mfinder\e[0m\t\t\tOpen the current working directory in Finder."
+		echo -e "  \e[32mfinder\e[0m\t\tOpen the current working directory in Finder."
 		echo -e "  \e[32mno_ds\e[0m\t\t\tRemove all .DS_Store files in the current working directory, recursively."
 		echo -e "  \e[32mcopy\e[0m\t\t\tCopy the content of a given file to the clipboard."
 
@@ -44,23 +44,40 @@ dev() {
 		echo -e "  \e[32mpest\e[0m\t\t\tRuns Pest tests in the current context"
 		echo -e "  \e[32mpestf\e[0m\t\t\tRuns Pest tests in the current context with a filter"
 		echo -e "  \e[32mpestp\e[0m\t\t\tRuns Pest tests in the current context in parallel"
-		echo -e "  \e[32mpestpf\e[0m\t\t\tRuns Pest tests in the current context in parallel with a filter"
+		echo -e "  \e[32mpestpf\e[0m\t\tRuns Pest tests in the current context in parallel with a filter"
 		echo -e "  \e[32mpint\e[0m\t\t\tRuns Pint in the current context"
 		echo -e "  \e[32mpintf\e[0m\t\t\tRuns Pint in the current context with a filter"
-		echo -e "  \e[32mduster\e[0m\t\t\tRuns Duster in the current context"
+		echo -e "  \e[32mduster\e[0m\t\tRuns Duster in the current context"
 		echo -e "  \e[32mphpstan\e[0m\t\tRuns PHPStan in the current context"
 		echo -e "  \e[32mmfs\e[0m\t\t\tRuns 'php artisan migrate:fresh --seed'"
 		echo -e "  \e[32mdusk\e[0m\t\t\tRuns Dusk in the current context"
 	else
-		echo -e "\e[91mUnknown command, use 'dev help' to list all available commands."
+		error_msg "Unknown command: '\e[91m$1\e[0m'. Use 'dev help' to list all available commands."
 	fi
 }
+# </frrrht-helpers command>
 
-# Global shell helpers
+# <Formatters>
+usage_msg() {
+  echo -e "  \n\e[33mUsage: \e[0m$1\e[0m\n"
+}
+error_msg() {
+  echo -e "  \n\e[91mError: \e[0m$1\e[0m\n"
+}
+success_msg() {
+  echo -e "  \n\e[32mSuccess: \e[0m$1\e[0m\n"
+}
+info_msg() {
+  echo -e "  \n\e[33m$1\e[0m\n"
+}
+# </Formatters>
+
+# <Global shell helpers>
 alias reloadshell="source $HOME/.zshrc"
 alias editshell="vim $HOME/.zshrc && reloadshell"
+# <Global shell helpers>
 
-# MacOS helpers
+# <MacOS helpers>
 alias cat='bat -P -p'
 alias catt='bat --paging=never'
 alias cattt='bat'
@@ -70,18 +87,25 @@ alias cd='z'
 alias finder='open .'
 copy() {
   if [ -z "$1" ]; then
-    echo "  \n\e[33mUsage: \e[0mcopy [file]\n"
+    usage_msg "copy [file]"
   else
+    if [ ! -f "$1" ]; then
+      error_msg "File not found: \e[32m$1\e[0m"
+      return
+    fi
+
     pbcopy < "$1"
-    echo "  \n\e[33mCopied content of \e[0m$1\e[33m to clipboard.\e[0m\n"
+    success_msg "Copied content of \e[33m$1\e[0m to clipboard."
   fi
 }
+# </MacOS helpers>
 
-# Development helpers
+# <Development helpers>
+alias subl='sublime'
+alias site='open "http://$(basename $PWD).test/"'
 sublime() {
 	open "$1" -a 'Sublime Text'
 }
-alias subl='sublime'
 wip() {
     if [ $# -eq 0 ]; then
         git add .
@@ -92,15 +116,27 @@ wip() {
     fi
     git push
 }
-alias repo='open "$(git config --get remote.origin.url)"'
-alias site='open "http://$(basename $PWD).test/"'
+repo() {
+  if [[ $(git config --get remote.origin.url) == "https://"* ]]; then
+    URL=$(git config --get remote.origin.url | sed -E 's/\.git$//')
+  else
+    URL=$(git config --get remote.origin.url | sed -E 's/.*@//;s/:/\//;s/\.git$//')
+  fi
+
+  if [ -z "$URL" ]; then
+     error_msg "No remote origin URL found."
+  else
+    open "https://$URL"
+  fi
+}
 no_ds() {
-  echo -e "\e[32mCleaning .DS_Store files..."
+  info_msg "Cleaning .DS_Store files..."
 	find . -type f -name '.DS_Store' -delete
+  success_msg "Cleaned .DS_Store files."
 }
 clean() {
 	if [ -d .git ]; then
-		echo -e "\e[32mCleaning stale git branches..."
+		info_msg "Cleaning stale git branches..."
 		git branch --merged | grep -v "\* \| main\|master\|develop" | xargs -n 1 git branch -d
 	fi
 
@@ -113,8 +149,19 @@ nr() {
     npm run $*
   fi
 }
+# </Development helpers>
 
-# Laravel/PHP specific helpers
+# <Laravel/PHP specific helpers>
+alias sail='vendor/bin/sail'
+alias phpunit='vendor/bin/phpunit'
+alias pest='clear;vendor/bin/pest'
+alias pestp='clear;vendor/bin/pest --parallel'
+alias pint='clear;vendor/bin/pint'
+alias duster='vendor/bin/duster'
+alias phpstan='vendor/bin/phpstan'
+alias mfs='ar migrate:fresh --seed'
+alias dusk='clear;ar dusk'
+
 ar() {
   if [ $# -eq 0 ]; then
     php artisan
@@ -122,28 +169,21 @@ ar() {
     php artisan $*
   fi
 }
-alias sail='vendor/bin/sail'
-alias phpunit='vendor/bin/phpunit'
-alias pest='clear;vendor/bin/pest'
 pestf() {
   clear
-  echo "  \n\e[33mRunning Pest tests with filter: \e[0m$*\n"
+  info_msg "Running Pest tests with filter: $*"
   vendor/bin/pest --filter="$*"
 }
-alias pestp='clear;vendor/bin/pest --parallel'
 pestpf() {
   clear
   vendor/bin/pest --parallel --filter="$*"
 }
-alias pint='clear;vendor/bin/pint'
 pintf() {
   clear
   vendor/bin/pint --filter="$*"
 }
-alias duster='vendor/bin/duster'
-alias phpstan='vendor/bin/phpstan'
-alias mfs='ar migrate:fresh --seed'
-alias dusk='clear;ar dusk'
+# </Laravel/PHP specific helpers>
 
-# Self-update
+# <Self-update>
 alias dotfiles="cd $HOME/dotfiles; git pull; reloadshell"
+# </Self-update>
