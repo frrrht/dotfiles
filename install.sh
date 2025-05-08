@@ -24,18 +24,18 @@ mkdir -p $HOME/.nvm
 # Check for Homebrew and install if we don't have it
 if test ! "$(which brew)"; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Check for oh-my-zsh and install if we don't have it
-if test ! "$(which omz)"; then
-  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
+# if test ! "$(which omz)"; then
+#   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# fi
 
 # Update Homebrew recipes
 brew update
 
 # Install all our dependencies with bundle (See Brewfile)
-brew tap homebrew/bundle
 brew bundle
 
 # Check for Laravel installer and install if we don't have it
@@ -50,14 +50,15 @@ if test ! "$(which valet)"; then
   "$HOME/.composer/vendor/bin/valet" trust
 fi
 
-# Check for Node and install if we don't have it
-if test ! "$(which node)"; then
-  nvm install lts/jod
-  nvm use lts/jod
-fi
-
 # Stow all directories to the home
 stow helpers -t $HOME
 
 rm -f $HOME/.zshrc
 stow zsh -t $HOME
+source $HOME/.zshrc
+
+# Check for Node and install if we don't have it
+if test ! "$(which node)"; then
+  nvm install lts/jod
+  nvm use lts/jod
+fi
